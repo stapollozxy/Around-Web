@@ -1,9 +1,12 @@
 import React from 'react';
+import { WrappedRegister } from './Register';
 
 export class Main extends React.Component {
     render() {
         return (
-            <div>this is main</div>
+            <section className="main">
+                <WrappedRegister/>
+            </section>
         );
     }
 }
