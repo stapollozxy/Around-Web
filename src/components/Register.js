@@ -24,11 +24,12 @@ class RegistrationForm extends React.Component {
                         username: values.username,
                         password: values.password,
                     }),
-                }).then(function(response) {
-                    message.success(response);
-                }, function(response) {
+                }).then((response) => {
+                    //message.success(response);
+                    this.props.history.push('/login');
+                }, (response) => {
                     message.error(response.responseText);
-                }).catch(function(error) {
+                }).catch((error) => {
                     message.error(error);
                 });
             }
