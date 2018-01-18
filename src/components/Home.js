@@ -2,6 +2,7 @@ import React from 'react';
 import { Tabs, Button, Spin } from 'antd';
 import $ from 'jquery';
 import {GEO_OPTIONS, POS_KEY, API_ROOT, AUTH_PREFIX, TOKEN_KEY} from '../constants';
+import {Gallery} from './Gallery';
 
 
 const TabPane = Tabs.TabPane;
@@ -12,6 +13,7 @@ export class Home extends React.Component {
         loadingGeoLocation : true,
         loadingPosts: false,
         error: '',
+        posts: [],
     }
 
     componentDidMount() {
@@ -55,14 +57,15 @@ export class Home extends React.Component {
                 Authorization: `${AUTH_PREFIX} ${localStorage.getItem(TOKEN_KEY)}`,
             },
         }).then( (response) => {
-                this.setState({ loadingPosts:true, error: '' });
+                this.setState({ loadingPosts:false, posts: response, error: '' });
                 console.log(response);
             }, (error) => {
-                this.setState({ loadingPosts:true, error: '' });
+                this.setState({ loadingPosts:error, error: error.responseText });
                 console.log(error);
             }
-
-        ).catch();
+        ).catch((error) => {
+            console.log(error);
+        });
     }
 
     onFailedLoadGeoLocation = () => {
@@ -76,6 +79,19 @@ export class Home extends React.Component {
             return <Spin tip="Loading..."/>
         } else if (this.state.loadingPosts) {
             return <Spin tip="Loading posts ..."/>
+        } else if (this.state.posts && this.state.posts.length > 0) {
+            const images = this.state.posts.map((post) => {
+                return {
+                    user: post.user,
+                    src: post.url,
+                    thumbnail: post.url,
+                    thumbnailWidth: 400,
+                    thumbnailHeight: 300,
+                    caption: post.message,
+
+                }
+            });
+            return <Gallery images={images}/>
         }
     }
 
