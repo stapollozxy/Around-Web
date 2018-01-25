@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Input, Upload, Icon } from 'antd';
 const FormItem = Form.Item;
 
-class CreateButtonForm extends React.Component {
+class CreatePostForm extends React.Component {
     normFile = (e) => {
         console.log('Upload event:', e);
         if (Array.isArray(e)) {
@@ -57,4 +57,4 @@ class CreateButtonForm extends React.Component {
     }
 }
 
-export const WrappedCreatePostForm = Form.create()(CreateButtonForm);
+export const WrappedCreatePostForm = Form.create()(CreatePostForm);
